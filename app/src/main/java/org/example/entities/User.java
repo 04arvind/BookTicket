@@ -1,7 +1,13 @@
 package org.example.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.annotation.JsonNaming;
+
 import java.util.List;
 
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
     private String name;
     private String password;
@@ -29,8 +35,8 @@ public class User {
     }
     public List<Ticket>getTicketsBooked(){return ticketsBooked;}
     public void printTickets(){
-        for(int i=0;i<ticketsBooked.size();i++){
-            System.out.println(ticketsBooked.get(i).getTicketInfo());
+        for (Ticket ticket : ticketsBooked) {
+            System.out.println(ticket.getTicketInfo());
         }
     }
     public String getUserId(){return userId;}
