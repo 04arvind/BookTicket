@@ -21,24 +21,22 @@ public class UserBookingService {
 
     private ObjectMapper objectMapper = new ObjectMapper();
 
-    private static  final  String USERS_PATH = "app/src/main/java/org.example/localDb/users.json";
+    private final String USERS_PATH = "app/src/main/java/org.example/localDb/users.json";
 
-    public  UserBookingService(User user1) throws IOException
+    public  UserBookingService(User user) throws IOException
     {
-        this.user = user1;
+        this.user = user;
 //        File users = new File(USERS_PATH);
 //        userList = objectMapper.readValue(users, new TypeReference<List<User>>() {});
-        loadUsers();
+        loadUserListFromFile();
     }
     public  UserBookingService() throws IOException
     {
-        loadUsers();
+        loadUserListFromFile();
     }
-    public List<User>loadUsers() throws IOException {
-        File users = new File(USERS_PATH);
-        return objectMapper.readValue(users, new TypeReference<List<User>>() {});
+    private void loadUserListFromFile() throws IOException{
+        userList = objectMapper.readValue(new File(USERS_PATH), new TypeReference<List<User>>() {});
     }
-
 
     public Boolean loginUser(){
         Optional<User> foundUser = userList.stream().filter(user1 ->{
@@ -63,7 +61,12 @@ public class UserBookingService {
         );
     }
     public void fetchBooking(){
-        user.printTickets();
+        Optional<User>userFetched = userList.stream().filter(user1 -> {
+            return.user1.getName().equals(user.getName()&&UserServiceUtil.checkPassword(user.getPassword(),user1.getHashedPassword()));
+        }).findFirst();
+        if(userFetched.isPresent()){
+            userFetched.get().printTickets();
+        }
     }
     public boolean cancelBooking(String ticketId){
         Scanner s = new Scanner(System.in);
