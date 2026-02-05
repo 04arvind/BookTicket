@@ -56,7 +56,7 @@ public class TrainService {
         try{
             objectMapper.writeValue(new File(TRAIN_DB_PATH),trainList);
         } catch (IOException e){
-//            e.printStackTrace();
+            e.printStackTrace();
         }
     }
 }
